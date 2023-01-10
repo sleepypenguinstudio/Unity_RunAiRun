@@ -10,7 +10,7 @@ public class playerMovement : MonoBehaviour
     Vector2 movement;
     private bool isFaceingRight = true;
 
-    public Rigidbody2D rb;
+    public Rigidbody2D rigidbody;
 
 
 
@@ -33,7 +33,7 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * speedPlayer * Time.fixedDeltaTime);
+        rigidbody.MovePosition(rigidbody.position + movement * speedPlayer * Time.fixedDeltaTime);
         //rb. horizontal = new Vector2(vertical * speedPlayer, rb.velocity.y);
     }
 

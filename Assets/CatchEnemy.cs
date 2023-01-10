@@ -12,15 +12,49 @@ public class CatchEnemy : MonoBehaviour
     public float speed ;
     public Transform target;
     public GameObject player;
+    public float degree;
+
+    public float angle;
+    private bool isRotationg ;
 
     public LineRenderer lineOfSight;
+
+    private void Awake() {
+        isRotationg = true;
+    }
 
     void Update()
     {
 
         lineOfSight.SetPosition(0,transform.position);
 
-        transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+        // while(angle < 90)
+        // {
+        //     angle += 10 * Time.deltaTime;
+        //      transform.Rotate(Vector3.forward * angle);
+
+        // }
+        if(isRotationg)
+        {
+            transform.localEulerAngles = new Vector3(0, 0, Mathf.PingPong(Time.time * rotationSpeed, degree) -45);
+        }
+
+       
+
+        // if(angle>90)
+        // {
+             
+        //     angle = -90;
+        // }
+       
+
+        //transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+        // StartCoroutine(RotateAroundPivot());
+
+        //transform.rotation = Quaternion.Euler(Vector3.forward * 60);
+        //transform.Rotate(Vector3(0, 0, 50));
+        
+
         
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.right, visionDistance);
 
@@ -33,14 +67,16 @@ public class CatchEnemy : MonoBehaviour
 
             if(hitInfo.collider.name == "player")
             {
-                while(Vector2.Distance(transform.position, target.position) > minDistance)
-                {
+                isRotationg = false;
+               // while(Vector2.Distance(transform.position, target.position) > minDistance)
+                //{
                     transform.position = Vector2.MoveTowards(transform.position, target.position, speed* Time.deltaTime);
-                    transform.Rotate(Vector3.forward * stopRotate* Time.deltaTime);
+                    
+                   // transform.Rotate(Vector3.forward * stopRotate* Time.deltaTime);
         
                  Debug.Log(hitInfo.collider.name);
 
-                }
+                //}
 
                 
             }
@@ -59,3 +95,23 @@ public class CatchEnemy : MonoBehaviour
         
     }
 }
+
+
+//  private IEnumerator RotateAroundPivot()
+//  {
+//      rotating = true;
+//      float rotatedDegrees = 0;
+ 
+//      w$$anonymous$$le (rotatedDegrees <= 90f)
+//      {
+//          Vector3 rotation = new Vector3(0, -90f, 0);
+//          float anglePerFrame = 90 * Time.deltaTime;
+//          transform.RotateAround(pivotPoint, rotation, anglePerFrame);
+         
+//          rotatedDegrees += anglePerFrame;
+//          yield return new WaitForEndOfFrame();
+//      }
+     
+//      transform.eulerAngles = new Vector3(transform.rotation.eulerAngles.x, targetRotation, transform.rotation.eulerAngles.z);
+//      rotating = false;
+//  }

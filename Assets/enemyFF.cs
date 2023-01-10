@@ -14,6 +14,8 @@ public class enemyFF : MonoBehaviour
         direction = aipath.desiredVelocity;
 
         transform.right = direction;
+
+        
         
     }
 }
